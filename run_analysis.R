@@ -51,5 +51,10 @@ run_analysis <- function() {
                            fBodyBodyGyroJerkMag_mean = V542, fBodyBodyGyroJerkMag_std = V543
         )
         
-        mrg_data
+        # Step 5: Create another tidy data set that contains the average of each variable for each activity and each subject
+        k <- aggregate(x = select(mrg_data, tBodyAcc_mean_X:fBodyBodyGyroJerkMag_std), by = list(mrg_data$activity, mrg_data$subject), mean)
+        k <- rename(k, subject = Group.2, activity = Group.1)
+        k <- merge(k, activity_labels)
+        
+        k
 }
